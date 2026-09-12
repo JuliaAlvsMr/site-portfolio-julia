@@ -1,0 +1,83 @@
+name: Sincronizar atividades
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Baixar repositório público
+        uses: actions/checkout@v4
+        with:
+          path: public-repo
+
+      - name: Baixar atividades privadas
+        uses: actions/checkout@v4
+        with:
+          repository: JuliaAlvsMr/portif-lio.ds-julia
+          token: ${{ secrets.SOURCE_REPO_TOKEN }}
+          path: private-repo
+
+      - name: Sincronizar atividades
+        run: |
+          rm -rf public-repo/public/atividades
+          mkdir -p public-repo/public/atividades
+
+          cp -R private-repo/. public-repo/public/atividades/
+
+      - name: Gerar dados do portfólio
+        run: |
+          cd public-repo
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path("public/atividades")
+
+          files = []
+
+          if root.exists():
+              for path in root.rglob("*"):
+                  if path.is_file():
+                      files.append(str(path.relative_to(root)).replace("\\", "/"))
+
+          data = {
+              "student": {
+                  "name": "Júlia Alves Marçal",
+                  "number": "17",
+                  "class": "3º B",
+                  "course": "Desenvolvimento de Sistemas"
+              },
+              "activities": files
+          }
+
+          Path("public/portfolio-data.json").write_text(
+              json.dumps(data, ensure_ascii=False, indent=2),
+              encoding="utf-8"
+          )
+          PY
+
+      - name: Salvar alterações
+        run: |
+          cd public-repo
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add public/atividades public/portfolio-data.json
+
+          if git diff --cached --quiet; then
+            echo "Nenhuma alteração encontrada."
+          else
+            git commit -m "Sincroniza atividades da Julia"
+            git push
+          fi
