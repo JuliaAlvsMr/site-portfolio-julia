@@ -1,0 +1,43 @@
+{
+  "student": {
+    "name": "Júlia Alves Marçal",
+    "number": "17",
+    "class": "3º B",
+    "course": "Desenvolvimento de Sistemas"
+  },
+  "activities": [
+    "1° Semestre",
+    "README.md",
+    ".git/index",
+    ".git/HEAD",
+    ".git/config",
+    ".git/config.worktree",
+    ".git/FETCH_HEAD",
+    ".git/shallow",
+    ".git/description",
+    ".git/hooks/pre-merge-commit.sample",
+    ".git/hooks/push-to-checkout.sample",
+    ".git/hooks/applypatch-msg.sample",
+    ".git/hooks/pre-push.sample",
+    ".git/hooks/pre-commit.sample",
+    ".git/hooks/pre-applypatch.sample",
+    ".git/hooks/pre-receive.sample",
+    ".git/hooks/post-update.sample",
+    ".git/hooks/fsmonitor-watchman.sample",
+    ".git/hooks/sendemail-validate.sample",
+    ".git/hooks/update.sample",
+    ".git/hooks/commit-msg.sample",
+    ".git/hooks/prepare-commit-msg.sample",
+    ".git/hooks/pre-rebase.sample",
+    ".git/logs/HEAD",
+    ".git/info/exclude",
+    ".git/logs/refs/heads/main",
+    ".git/logs/refs/remotes/origin/main",
+    ".git/refs/heads/main",
+    ".git/refs/remotes/origin/main",
+    ".git/objects/b6/ddecb7bfc1748b9c5d4550996af8ccfe2c6886",
+    ".git/objects/bb/7685627fd38b9dfe98bf0d49b7fb3114d4f417",
+    ".git/objects/5b/2dd3dec162076142840108090cee90d32b130e",
+    ".git/objects/7b/0a6fb65f9c93f28236dd44a87b8f2aa272641f"
+  ]
+}
