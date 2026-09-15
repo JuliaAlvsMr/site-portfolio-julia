@@ -1,15 +1,10 @@
-const PORTFOLIO_DATA_URL =
-  "https://JuliaAlvsMr.github.io/site-portfolio-julia/portfolio-data.json";
-
 export async function getPortfolioData() {
-  const response = await fetch(PORTFOLIO_DATA_URL, {
-    cache: "no-store",
-  });
+  const response = await fetch(
+    `${import.meta.env.BASE_URL}portfolio-data.json`
+  );
 
   if (!response.ok) {
-    throw new Error(
-      "Não foi possível carregar os dados do portfólio."
-    );
+    throw new Error("Não foi possível carregar os dados do portfólio.");
   }
 
   return response.json();
