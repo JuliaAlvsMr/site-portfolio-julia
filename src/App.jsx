@@ -8,8 +8,7 @@ function App() {
         <div className="header-content">
           <p className="header-small">PORTFÓLIO ACADÊMICO</p>
 
-          <h1>Júlia Alves Marçal</h1>
-
+          <h1 className="header-title">
           <p className="header-subtitle">
             Desenvolvimento de Sistemas
           </p>

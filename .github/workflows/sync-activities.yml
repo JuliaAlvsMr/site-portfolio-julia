@@ -1,3 +1,4 @@
+
 name: Sincronizar atividades
 
 on:
@@ -15,6 +16,8 @@ jobs:
     steps:
       - name: Baixar site-portfolio-julia
         uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: Baixar repositório privado
         uses: actions/checkout@v4
@@ -23,11 +26,14 @@ jobs:
           token: ${{ secrets.SOURCE_REPO_TOKEN }}
           path: private-repo
 
-      - name: Copiar atividades
+      - name: Remover antigo submódulo
         run: |
+          git rm --cached -f public/atividades || true
           rm -rf public/atividades
           mkdir -p public/atividades
 
+      - name: Copiar atividades
+        run: |
           rsync -av \
             --exclude=".git/" \
             --exclude=".github/" \
@@ -67,19 +73,14 @@ jobs:
 
       - name: Verificar arquivos sincronizados
         run: |
-          echo "Arquivos dentro de public/atividades:"
-          find public/atividades -type f | head -100
-
-          echo ""
           echo "Quantidade de arquivos:"
           find public/atividades -type f | wc -l
 
-          echo ""
-          echo "portfolio-data.json:"
-          cat public/portfolio-data.json
+          echo "Primeiros arquivos:"
+          find public/atividades -type f | head -30
 
-      - name: Verificar alterações
-        run: git status --short
+          echo "Dados gerados:"
+          cat public/portfolio-data.json
 
       - name: Salvar sincronização
         run: |
@@ -92,6 +93,5 @@ jobs:
             echo "Nenhuma alteração encontrada."
           else
             git commit -m "Sincroniza atividades da Julia"
-            git pull --rebase origin main
-            git push
+            git push origin main
           fi
